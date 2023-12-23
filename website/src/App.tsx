@@ -201,8 +201,24 @@ function App() {
   }
 
   useEffect(() => {
-    if (unicodeLength(`${currentGuess}`) === solution.length) {
-      onEnter()
+    if (unicodeLength(`${currentGuess}`) !== solution.length) {
+      return
+    }
+    if (!isWordInWordList(currentGuess)) {
+      setCurrentRowClass('jiggle')
+      return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
+        onClose: clearCurrentRowClass,
+      })
+    }
+    // enforce hard mode - all guesses must contain all previously revealed letters
+    if (isHardMode) {
+      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
+      if (firstMissingReveal) {
+        setCurrentRowClass('jiggle')
+        return showErrorAlert(firstMissingReveal, {
+          onClose: clearCurrentRowClass,
+        })
+      }
     }
   }, [currentGuess])
 
