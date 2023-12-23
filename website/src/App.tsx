@@ -220,7 +220,7 @@ function App() {
         })
       }
     }
-  }, [currentGuess])
+  }, [currentGuess, isHardMode, guesses, showErrorAlert])
 
   const onDelete = () => {
     setCurrentGuess(
