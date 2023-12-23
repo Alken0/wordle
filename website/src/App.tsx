@@ -192,14 +192,19 @@ function App() {
   }, [isGameWon, isGameLost, showSuccessAlert])
 
   const onChar = (value: string) => {
-    if (
-      unicodeLength(`${currentGuess}${value}`) <= solution.length &&
-      guesses.length < MAX_CHALLENGES &&
-      !isGameWon
-    ) {
+    if (isGameWon || isGameLost) {
+      return
+    }
+    if (unicodeLength(`${currentGuess}${value}`) <= solution.length) {
       setCurrentGuess(`${currentGuess}${value}`)
     }
   }
+
+  useEffect(() => {
+    if (unicodeLength(`${currentGuess}`) === solution.length) {
+      onEnter()
+    }
+  }, [currentGuess])
 
   const onDelete = () => {
     setCurrentGuess(
