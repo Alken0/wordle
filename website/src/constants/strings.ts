@@ -1,39 +1,44 @@
 export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
-export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
-export const GAME_COPIED_MESSAGE = 'Game copied to clipboard'
-export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
-export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
+export const WIN_MESSAGES = [
+  'Großartige Arbeit!',
+  'Fantastisch!',
+  'Gut gemacht!',
+  'Hervorragend!',
+]
+export const GAME_COPIED_MESSAGE = 'Spiel in die Zwischenablage kopiert'
+export const NOT_ENOUGH_LETTERS_MESSAGE = 'Nicht genügend Buchstaben'
+export const WORD_NOT_FOUND_MESSAGE = 'Wort nicht gefunden'
 export const HARD_MODE_ALERT_MESSAGE =
-  'Hard Mode can be enabled only at the start!'
+  'Der schwere Modus kann nur beim Start aktiviert werden!'
 export const HARD_MODE_DESCRIPTION =
-  'Any revealed hints must be used in subsequent guesses'
-export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
+  'Alle aufgedeckten Buchstaben müssen bei den folgenden Versuchen verwendet werden'
+export const HIGH_CONTRAST_MODE_DESCRIPTION = 'Für besseres Farbsehen'
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
-  `The word was ${solution}`
+  `Das Wort war ${solution}`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
-  `Must use ${guess} in position ${position}`
+  `Muss ${guess} in Position ${position} verwenden`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
-  `Guess must contain ${letter}`
-export const ENTER_TEXT = 'Enter'
-export const DELETE_TEXT = 'Delete'
-export const STATISTICS_TITLE = 'Statistics'
-export const GUESS_DISTRIBUTION_TEXT = 'Guess Distribution'
-export const NEW_WORD_TEXT = 'New word in'
-export const SHARE_TEXT = 'Share'
+  `Versuch muss ${letter} enthalten`
+export const ENTER_TEXT = 'Eingabe'
+export const DELETE_TEXT = 'Löschen'
+export const STATISTICS_TITLE = 'Statistiken'
+export const GUESS_DISTRIBUTION_TEXT = 'Verteilung der Versuche'
+export const NEW_WORD_TEXT = 'Neues Wort in'
+export const SHARE_TEXT = 'Teilen'
 export const SHARE_FAILURE_TEXT =
-  'Unable to share the results. This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.'
-export const MIGRATE_BUTTON_TEXT = 'Transfer'
+  'Die Ergebnisse können nicht geteilt werden. Diese Funktion ist nur mit sicherer Verbindung (HTTPS) in einigen oder allen unterstützten Browsern verfügbar.'
+export const MIGRATE_BUTTON_TEXT = 'Übertragen'
 export const MIGRATE_DESCRIPTION_TEXT =
-  'Click here to transfer your statistics to a new device.'
-export const TOTAL_TRIES_TEXT = 'Total tries'
-export const SUCCESS_RATE_TEXT = 'Success rate'
-export const CURRENT_STREAK_TEXT = 'Current streak'
-export const BEST_STREAK_TEXT = 'Best streak'
+  'Klicken Sie hier, um Ihre Statistiken auf ein neues Gerät zu übertragen.'
+export const TOTAL_TRIES_TEXT = 'Versuche insgesamt'
+export const SUCCESS_RATE_TEXT = 'Erfolgsrate'
+export const CURRENT_STREAK_TEXT = 'Aktuelle Streak'
+export const BEST_STREAK_TEXT = 'Beste Streak'
 export const DISCOURAGE_INAPP_BROWSER_TEXT =
-  "You are using an embedded browser and may experience problems sharing or saving your results. We encourage you rather to use your device's default browser."
+  'Sie verwenden einen eingebetteten Browser und haben möglicherweise Probleme beim Teilen oder Speichern Ihrer Ergebnisse. Wir empfehlen Ihnen, lieber den Standardbrowser Ihres Geräts zu verwenden.'
 
-export const DATEPICKER_TITLE = 'Choose a past date'
-export const DATEPICKER_CHOOSE_TEXT = 'Choose'
-export const DATEPICKER_TODAY_TEXT = 'today'
-export const ARCHIVE_GAMEDATE_TEXT = 'Game date'
+export const DATEPICKER_TITLE = 'Wählen Sie ein vergangenes Datum'
+export const DATEPICKER_CHOOSE_TEXT = 'Auswählen'
+export const DATEPICKER_TODAY_TEXT = 'Heute'
+export const ARCHIVE_GAMEDATE_TEXT = 'Datem des Spiels'

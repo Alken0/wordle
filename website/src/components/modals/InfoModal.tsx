@@ -8,26 +8,26 @@ type Props = {
 
 export const InfoModal = ({ isOpen, handleClose }: Props) => {
   return (
-    <BaseModal title="How to play" isOpen={isOpen} handleClose={handleClose}>
+    <BaseModal title="Anleitung" isOpen={isOpen} handleClose={handleClose}>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        Guess the word in 6 tries. After each guess, the color of the tiles will
-        change to show how close your guess was to the word.
+        Erraten Sie das Wort in 6 Versuchen. Nach jedem Versuch ändert sich die
+        Farbe der Kacheln um anzuzeigen, wie nahe du dem Wort warst.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
         <Cell
           isRevealing={true}
           isCompleted={true}
-          value="W"
+          value="K"
           status="correct"
         />
+        <Cell value="L" isCompleted={true} />
         <Cell value="E" isCompleted={true} />
-        <Cell value="A" isCompleted={true} />
-        <Cell value="R" isCompleted={true} />
-        <Cell value="Y" isCompleted={true} />
+        <Cell value="I" isCompleted={true} />
+        <Cell value="N" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter W is in the word and in the correct spot.
+        Der Buchstabe K ist in dem Wort enthalten und an der korrekten Position.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
@@ -43,18 +43,18 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <Cell value="T" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter L is in the word but in the wrong spot.
+        Der Buchstabe L ist im Wort enthalten, aber an der falschen Stelle.
       </p>
 
       <div className="mb-1 mt-4 flex justify-center">
-        <Cell value="V" isCompleted={true} />
-        <Cell value="A" isCompleted={true} />
-        <Cell value="G" isCompleted={true} />
-        <Cell isRevealing={true} isCompleted={true} value="U" status="absent" />
+        <Cell value="S" isCompleted={true} />
         <Cell value="E" isCompleted={true} />
+        <Cell value="N" isCompleted={true} />
+        <Cell isRevealing={true} isCompleted={true} value="A" status="absent" />
+        <Cell value="T" isCompleted={true} />
       </div>
       <p className="text-sm text-gray-500 dark:text-gray-300">
-        The letter U is not in the word in any spot.
+        Der Buchstabe A kommt in dem Wort nicht vor.
       </p>
 
       <p className="mt-6 text-sm italic text-gray-500 dark:text-gray-300">

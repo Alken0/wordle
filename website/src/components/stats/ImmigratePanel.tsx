@@ -55,7 +55,7 @@ export const ImmigratePanel = () => {
     if (
       textarea &&
       window.confirm(
-        'Are you sure you want to override the statistics on this device? This action is not reversable.'
+        'Sind Sie sicher, dass Sie die Statistiken für dieses Gerät überschreiben wollen? Diese Aktion ist nicht umkehrbar.'
       )
     ) {
       var migrationStats = JSON.parse(
