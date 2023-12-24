@@ -1,6 +1,6 @@
 {
   "name": "game",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -75,5 +75,6 @@
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/src/$1"
     }
-  }
+  },
+  "homepage": "/wordle/website/src/build"
 }
