@@ -23,7 +23,7 @@ export const NOT_CONTAINED_MESSAGE = (letter: string) =>
 export const ENTER_TEXT = 'Eingabe'
 export const DELETE_TEXT = 'Löschen'
 export const STATISTICS_TITLE = 'Statistiken'
-export const GUESS_DISTRIBUTION_TEXT = 'Verteilung der Versuche'
+export const GUESS_DISTRIBUTION_TEXT = 'Übersicht'
 export const NEW_WORD_TEXT = 'Neues Wort in'
 export const SHARE_TEXT = 'Teilen'
 export const SHARE_FAILURE_TEXT =
