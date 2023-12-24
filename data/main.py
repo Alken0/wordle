@@ -1,6 +1,8 @@
 import linecache
 import re
 
+import numpy as np
+
 
 def generate_words():
     words = []
@@ -17,8 +19,8 @@ def generate_words():
     words = sorted(list(words))
     print(f"words: {len(words)}")
 
-    with open('wordlist.ts', 'w') as file:
-        content = "export const WORDS = [\n" \
+    with open('validGuesses.ts', 'w') as file:
+        content = "export const VALID_GUESSES = [\n" \
                   + '\n'.join([f"'{str(s).lower()}'," for s in words]) \
                   + "\n]"
         file.write(content)
@@ -33,11 +35,15 @@ def generate_solutions():
     solutions += re.findall(r'"([A-Z]{5})"', line)
 
     solutions = sorted(list({s for s in solutions}))
-    print(f"solutions: {len(solutions)}")
+    np.random.seed(0)
+    indexes = np.arange(len(solutions))
+    np.random.shuffle(indexes)
+    words = [solutions[i] for i in indexes]
+    print(f"solutions: {len(words)}")
 
-    with open('validGuesses.ts', 'w') as file:
-        content = "export const VALID_GUESSES = [\n" \
-                  + '\n'.join([f"'{str(s).lower()}'," for s in solutions]) \
+    with open('wordlist.ts', 'w') as file:
+        content = "export const WORDS = [\n" \
+                  + '\n'.join([f"'{str(s).lower()}'," for s in words]) \
                   + "\n]"
         file.write(content)
 
