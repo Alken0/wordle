@@ -1,3 +1,5 @@
+import { WORDS } from 'constants/wordlist'
+
 import {
   getIndex,
   getLastGameDate,
@@ -72,8 +74,8 @@ describe('solutionIndex', () => {
 
   test('word of the day', () => {
     expect(() => getWordOfDay(-1)).toThrowError('Invalid index')
-    expect(getWordOfDay(0)).toEqual('WHICH')
-    expect(getWordOfDay(1)).toEqual('THERE')
-    expect(getWordOfDay(255)).toEqual('SHEEP')
+    expect(getWordOfDay(0)).toEqual(WORDS[0])
+    expect(getWordOfDay(1)).toEqual(WORDS[1])
+    expect(getWordOfDay(255)).toEqual(WORDS[255])
   })
 })
