@@ -1,6 +1,6 @@
 {
-  "name": "wördel",
-  "version": "1.0.1",
+  "name": "woerdel",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -8,8 +8,7 @@
     "fix": "prettier --write src",
     "lint": "prettier --check src",
     "start": "react-scripts start",
-    "test": "react-scripts test",
-    "prepare": "husky install"
+    "test": "react-scripts test"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",

@@ -3,7 +3,7 @@ import { UAParser } from 'ua-parser-js'
 import { MAX_CHALLENGES } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
-import { solutionIndex, unicodeSplit } from './words'
+import { unicodeSplit } from './words'
 import { getToday } from './dateutils'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
