@@ -2,9 +2,9 @@ import { UAParser } from 'ua-parser-js'
 
 import { MAX_CHALLENGES } from '../constants/settings'
 import { GAME_TITLE } from '../constants/strings'
+import { getToday } from './dateutils'
 import { getGuessStatuses } from './statuses'
 import { unicodeSplit } from './words'
-import { getToday } from './dateutils'
 
 const webShareApiDeviceTypes: string[] = ['mobile', 'smarttv', 'wearable']
 const parser = new UAParser()
@@ -29,7 +29,8 @@ export const shareStatus = (
       solution,
       guesses,
       getEmojiTiles(isDarkMode, isHighContrastMode)
-    ) + '\n\nalken0.github.io/wordle'
+    ) +
+    '\n\nalken0.github.io/wordle'
 
   const shareData = { text: textToShare }
 

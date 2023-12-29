@@ -10,6 +10,9 @@ type Props = {
   isRevealing?: boolean
   isCompleted?: boolean
   position?: number
+  index?: number
+  update?: number
+  setIndex?: any
 }
 
 export const Cell = ({
@@ -18,6 +21,8 @@ export const Cell = ({
   isRevealing,
   isCompleted,
   position = 0,
+  index,
+  setIndex,
 }: Props) => {
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -46,7 +51,13 @@ export const Cell = ({
   )
 
   return (
-    <div className={classes} style={{ animationDelay }}>
+    <div
+      className={classes}
+      style={{ animationDelay }}
+      onClick={() => {
+        setIndex(index)
+      }}
+    >
       <div className="letter-container" style={{ animationDelay }}>
         {value}
       </div>

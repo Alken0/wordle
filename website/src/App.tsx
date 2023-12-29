@@ -2,7 +2,7 @@ import './App.css'
 
 import { ClockIcon } from '@heroicons/react/outline'
 import { format } from 'date-fns'
-import { default as GraphemeSplitter } from 'grapheme-splitter'
+import { Guess, convertGuessToString, isUncompletedGuess } from 'lib/guess'
 import { useEffect, useState } from 'react'
 import Div100vh from 'react-div-100vh'
 
@@ -51,7 +51,6 @@ import {
   setGameDate,
   solution,
   solutionGameDate,
-  unicodeLength,
 } from './lib/words'
 
 function App() {
@@ -63,7 +62,10 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuess, setCurrentGuess] = useState<Guess>(
+    solution.split('').map((char) => undefined)
+  )
+  const [index, setIndex] = useState<number>(0)
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -170,6 +172,10 @@ function App() {
   }, [guesses])
 
   useEffect(() => {
+    console.log(index)
+  }, [index])
+
+  useEffect(() => {
     if (isGameWon) {
       const winMessage =
         WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)]
@@ -195,16 +201,19 @@ function App() {
     if (isGameWon || isGameLost) {
       return
     }
-    if (unicodeLength(`${currentGuess}${value}`) <= solution.length) {
-      setCurrentGuess(`${currentGuess}${value}`)
+    if (index < solution.length) {
+      let copy = [...currentGuess]
+      copy[index] = value
+      setIndex(index + 1)
+      setCurrentGuess(copy)
     }
   }
 
   useEffect(() => {
-    if (unicodeLength(`${currentGuess}`) !== solution.length) {
+    if (isUncompletedGuess(currentGuess)) {
       return
     }
-    if (!isWordInWordList(currentGuess)) {
+    if (!isWordInWordList(convertGuessToString(currentGuess))) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -212,7 +221,10 @@ function App() {
     }
     // enforce hard mode - all guesses must contain all previously revealed letters
     if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
+      const firstMissingReveal = findFirstUnusedReveal(
+        convertGuessToString(currentGuess),
+        guesses
+      )
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle')
         return showErrorAlert(firstMissingReveal, {
@@ -220,12 +232,22 @@ function App() {
         })
       }
     }
+    //todo
   }, [currentGuess, isHardMode, guesses, showErrorAlert])
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-    )
+    let copy = [...currentGuess]
+    if (index >= solution.length) {
+      setIndex(solution.length - 1)
+      copy[solution.length - 1] = undefined
+    } else if (copy[index] === undefined) {
+      let i = Math.max(index - 1, 0)
+      setIndex(i)
+      copy[i] = undefined
+    } else {
+      copy[index] = undefined
+    }
+    setCurrentGuess(copy)
   }
 
   const onEnter = () => {
@@ -233,14 +255,14 @@ function App() {
       return
     }
 
-    if (!(unicodeLength(currentGuess) === solution.length)) {
+    if (isUncompletedGuess(currentGuess)) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
       })
     }
 
-    if (!isWordInWordList(currentGuess)) {
+    if (!isWordInWordList(convertGuessToString(currentGuess))) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(WORD_NOT_FOUND_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -249,7 +271,10 @@ function App() {
 
     // enforce hard mode - all guesses must contain all previously revealed letters
     if (isHardMode) {
-      const firstMissingReveal = findFirstUnusedReveal(currentGuess, guesses)
+      const firstMissingReveal = findFirstUnusedReveal(
+        convertGuessToString(currentGuess),
+        guesses
+      )
       if (firstMissingReveal) {
         setCurrentRowClass('jiggle')
         return showErrorAlert(firstMissingReveal, {
@@ -265,15 +290,16 @@ function App() {
       setIsRevealing(false)
     }, REVEAL_TIME_MS * solution.length)
 
-    const winningWord = isWinningWord(currentGuess)
+    const winningWord = isWinningWord(convertGuessToString(currentGuess))
 
     if (
-      unicodeLength(currentGuess) === solution.length &&
+      !isUncompletedGuess(currentGuess) &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      setGuesses([...guesses, convertGuessToString(currentGuess)])
+      setCurrentGuess(solution.split('').map((char) => undefined))
+      setIndex(0)
 
       if (winningWord) {
         if (isLatestGame) {
@@ -322,6 +348,7 @@ function App() {
               currentGuess={currentGuess}
               isRevealing={isRevealing}
               currentRowClassName={currentRowClass}
+              setIndex={(index: number) => setIndex(index)}
             />
           </div>
           <Keyboard

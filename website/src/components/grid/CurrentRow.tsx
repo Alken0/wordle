@@ -1,23 +1,25 @@
-import { solution, unicodeSplit } from '../../lib/words'
+import { Guess } from 'lib/guess'
+
 import { Cell } from './Cell'
 
 type Props = {
-  guess: string
+  guess: Guess
   className: string
+  setIndex: any
 }
 
-export const CurrentRow = ({ guess, className }: Props) => {
-  const splitGuess = unicodeSplit(guess)
-  const emptyCells = Array.from(Array(solution.length - splitGuess.length))
+export const CurrentRow = ({ guess, className, setIndex }: Props) => {
   const classes = `flex justify-center mb-1 ${className}`
 
   return (
     <div className={classes}>
-      {splitGuess.map((letter, i) => (
-        <Cell key={i} value={letter} />
-      ))}
-      {emptyCells.map((_, i) => (
-        <Cell key={i} />
+      {guess.map((letter, i) => (
+        <Cell
+          key={i}
+          value={letter}
+          index={i}
+          setIndex={(index: number) => setIndex(index)}
+        />
       ))}
     </div>
   )

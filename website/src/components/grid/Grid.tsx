@@ -1,3 +1,5 @@
+import { Guess } from 'lib/guess'
+
 import { MAX_CHALLENGES } from '../../constants/settings'
 import { CompletedRow } from './CompletedRow'
 import { CurrentRow } from './CurrentRow'
@@ -6,9 +8,10 @@ import { EmptyRow } from './EmptyRow'
 type Props = {
   solution: string
   guesses: string[]
-  currentGuess: string
+  currentGuess: Guess
   isRevealing?: boolean
   currentRowClassName: string
+  setIndex: any
 }
 
 export const Grid = ({
@@ -17,6 +20,7 @@ export const Grid = ({
   currentGuess,
   isRevealing,
   currentRowClassName,
+  setIndex,
 }: Props) => {
   const empties =
     guesses.length < MAX_CHALLENGES - 1
@@ -34,7 +38,11 @@ export const Grid = ({
         />
       ))}
       {guesses.length < MAX_CHALLENGES && (
-        <CurrentRow guess={currentGuess} className={currentRowClassName} />
+        <CurrentRow
+          guess={currentGuess}
+          className={currentRowClassName}
+          setIndex={(index: number) => setIndex(index)}
+        />
       )}
       {empties.map((_, i) => (
         <EmptyRow key={i} />
