@@ -22,7 +22,7 @@ export const shareStatus = (
   handleShareFailure: () => void
 ) => {
   const textToShare =
-    `${GAME_TITLE} ${getToday().getDate()}.${getToday().getMonth()} ${
+    `${GAME_TITLE} ${getToday().getDate()}.${getToday().getMonth() + 1} ${
       lost ? 'X' : guesses.length
     }/${MAX_CHALLENGES}${isHardMode ? '*' : ''}\n\n` +
     generateEmojiGrid(
