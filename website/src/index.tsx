@@ -6,12 +6,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { AlertProvider } from './context/AlertContext';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import {store} from "./store/store";
 
 ReactDOM.render(
     <React.StrictMode>
+        <Provider store={store}>
         <AlertProvider>
             <App />
         </AlertProvider>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );
