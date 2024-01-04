@@ -50,14 +50,23 @@ export const Cell = ({
     }
   )
 
+  if (setIndex !== undefined) {
+    return (
+      <div
+        className={classes}
+        style={{ animationDelay }}
+        onClick={() => {
+          setIndex(index)
+        }}
+      >
+        <div className="letter-container" style={{ animationDelay }}>
+          {value}
+        </div>
+      </div>
+    )
+  }
   return (
-    <div
-      className={classes}
-      style={{ animationDelay }}
-      onClick={() => {
-        setIndex(index)
-      }}
-    >
+    <div className={classes} style={{ animationDelay }}>
       <div className="letter-container" style={{ animationDelay }}>
         {value}
       </div>
