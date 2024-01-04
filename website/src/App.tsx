@@ -357,6 +357,7 @@ function App() {
                             isRevealing={isRevealing}
                             currentRowClassName={currentRowClass}
                             setIndex={(index: number) => setIndex(index)}
+                            currentIndex={index}
                         />
                     </div>
                     <Keyboard

@@ -12,6 +12,7 @@ type Props = {
     isRevealing?: boolean;
     currentRowClassName: string;
     setIndex: any;
+    currentIndex: number
 };
 
 export const Grid = ({
@@ -21,6 +22,7 @@ export const Grid = ({
     isRevealing,
     currentRowClassName,
     setIndex,
+    currentIndex,
 }: Props) => {
     const empties =
         guesses.length < MAX_CHALLENGES - 1
@@ -42,6 +44,7 @@ export const Grid = ({
                     guess={currentGuess}
                     className={currentRowClassName}
                     setIndex={(index: number) => setIndex(index)}
+                    currentIndex={currentIndex}
                 />
             )}
             {empties.map((_, i) => (

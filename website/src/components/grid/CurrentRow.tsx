@@ -6,9 +6,10 @@ type Props = {
     guess: Guess;
     className: string;
     setIndex: any;
+    currentIndex: number
 };
 
-export const CurrentRow = ({ guess, className, setIndex }: Props) => {
+export const CurrentRow = ({ guess, className, setIndex, currentIndex }: Props) => {
     const classes = `flex justify-center mb-1 ${className}`;
 
     return (
@@ -19,6 +20,7 @@ export const CurrentRow = ({ guess, className, setIndex }: Props) => {
                     value={letter}
                     index={i}
                     setIndex={(index: number) => setIndex(index)}
+                    currentIndex={currentIndex}
                 />
             ))}
         </div>

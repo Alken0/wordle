@@ -11,8 +11,8 @@ type Props = {
     isCompleted?: boolean;
     position?: number;
     index?: number;
-    update?: number;
     setIndex?: any;
+    currentIndex?: number
 };
 
 export const Cell = ({
@@ -23,8 +23,10 @@ export const Cell = ({
     position = 0,
     index,
     setIndex,
+    currentIndex
 }: Props) => {
     const isFilled = value && !isCompleted;
+    const isSelected = (index !== undefined && index === currentIndex);
     const shouldReveal = isRevealing && isCompleted;
     const animationDelay = `${position * REVEAL_TIME_MS}ms`;
     const isHighContrast = getStoredIsHighContrastMode();
@@ -34,7 +36,8 @@ export const Cell = ({
         {
             'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-600':
                 !status,
-            'border-black dark:border-slate-100': value && !status,
+            'border-black dark:border-slate-100': isSelected,
+            'border-slate-200 dark:border-slate-600': !isSelected,
             'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
                 status === 'absent',
             'correct shadowed bg-orange-500 text-white border-orange-500':
