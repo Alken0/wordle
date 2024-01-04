@@ -1,8 +1,9 @@
 {
   "endOfLine": "auto",
   "singleQuote": true,
-  "semi": false,
+  "semi": true,
   "trailingComma": "es5",
+  "tabWidth": 4,
   "importOrder": [
     "^(.*).css",
     "<THIRD_PARTY_MODULES>",
