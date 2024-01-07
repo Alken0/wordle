@@ -119,6 +119,7 @@ function App() {
 
     useEffect(() => {
         dispatch(woerdelSlice.setIsGameWon(loadedGameWasWon))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loadedGameWasWon]);
 
     useEffect(() => {
@@ -241,8 +242,9 @@ function App() {
                 });
             }
         }
-        //todo
-    }, [currentGuess, isHardMode, guesses, showErrorAlert]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentGuess]);
 
     const onDelete = () => {
         let copy = [...currentGuess];
