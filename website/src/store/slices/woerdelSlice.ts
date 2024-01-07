@@ -1,22 +1,21 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  index: 0,
+  currentIndex: 0,
 }
 
 export const woerdelSlice = createSlice({
   name: 'woerdel',
   initialState,
-
   reducers: {
-    setIndex: (state: any, action: PayloadAction<number>) => {
-      state.index = action.payload
+    setCurrentIndex: (state: any, action: PayloadAction<number>) => {
+      state.currentIndex = action.payload
     },
   },
 })
 
-export const { setIndex } = woerdelSlice.actions
+export const { setCurrentIndex } = woerdelSlice.actions
 
-export const getIndex = (state: any): number => state.index
+export const getCurrentIndex = (state: any): number => state.woerdel.currentIndex
 
 export default woerdelSlice.reducer

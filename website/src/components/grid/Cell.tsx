@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import { REVEAL_TIME_MS } from '../../constants/settings';
 import { getStoredIsHighContrastMode } from '../../lib/localStorage';
 import { CharStatus } from '../../lib/statuses';
+import * as woerdelSlice from "../../store/slices/woerdelSlice";
+import {useDispatch, useSelector} from "react-redux";
 
 type Props = {
     value?: string;
@@ -11,8 +13,6 @@ type Props = {
     isCompleted?: boolean;
     position?: number;
     index?: number;
-    setIndex?: any;
-    currentIndex?: number
 };
 
 export const Cell = ({
@@ -21,15 +21,17 @@ export const Cell = ({
     isRevealing,
     isCompleted,
     position = 0,
-    index,
-    setIndex,
-    currentIndex
+    index
 }: Props) => {
+    const currentIndex= useSelector(woerdelSlice.getCurrentIndex);
+
     const isFilled = value && !isCompleted;
     const isSelected = (index !== undefined && index === currentIndex);
     const shouldReveal = isRevealing && isCompleted;
     const animationDelay = `${position * REVEAL_TIME_MS}ms`;
     const isHighContrast = getStoredIsHighContrastMode();
+
+    const dispatch = useDispatch()
 
     const classes = classnames(
         'xxshort:w-11 xxshort:h-11 short:text-2xl short:w-12 short:h-12 w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-bold rounded dark:text-white',
@@ -53,13 +55,13 @@ export const Cell = ({
         }
     );
 
-    if (setIndex !== undefined) {
+    if (index !== undefined) {
         return (
             <div
                 className={classes}
                 style={{ animationDelay }}
                 onClick={() => {
-                    setIndex(index);
+                    dispatch(woerdelSlice.setCurrentIndex(index))
                 }}
             >
                 <div className="letter-container" style={{ animationDelay }}>

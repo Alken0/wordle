@@ -52,6 +52,8 @@ import {
     solution,
     solutionGameDate,
 } from './lib/words';
+import {useDispatch, useSelector} from "react-redux";
+import * as woerdelSlice from "./store/slices/woerdelSlice";
 
 function App() {
     const isLatestGame = getIsLatestGame();
@@ -65,7 +67,6 @@ function App() {
     const [currentGuess, setCurrentGuess] = useState<Guess>(
         solution.split('').map((char) => undefined)
     );
-    const [index, setIndex] = useState<number>(0);
     const [isGameWon, setIsGameWon] = useState(false);
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
@@ -111,6 +112,10 @@ function App() {
             ? localStorage.getItem('gameMode') === 'hard'
             : false
     );
+
+    const currentIndex= useSelector(woerdelSlice.getCurrentIndex);
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         // if no game state on load,
@@ -176,10 +181,6 @@ function App() {
     }, [guesses]);
 
     useEffect(() => {
-        console.log(index);
-    }, [index]);
-
-    useEffect(() => {
         if (isGameWon) {
             const winMessage =
                 WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
@@ -205,10 +206,10 @@ function App() {
         if (isGameWon || isGameLost) {
             return;
         }
-        if (index < solution.length) {
+        if (currentIndex < solution.length) {
             let copy = [...currentGuess];
-            copy[index] = value;
-            setIndex(index + 1);
+            copy[currentIndex] = value;
+            dispatch(woerdelSlice.setCurrentIndex(currentIndex + 1));
             setCurrentGuess(copy);
         }
     };
@@ -241,15 +242,15 @@ function App() {
 
     const onDelete = () => {
         let copy = [...currentGuess];
-        if (index >= solution.length) {
-            setIndex(solution.length - 1);
+        if (currentIndex >= solution.length) {
+            dispatch(woerdelSlice.setCurrentIndex(solution.length - 1));
             copy[solution.length - 1] = undefined;
-        } else if (copy[index] === undefined) {
-            let i = Math.max(index - 1, 0);
-            setIndex(i);
+        } else if (copy[currentIndex] === undefined) {
+            let i = Math.max(currentIndex - 1, 0);
+            dispatch(woerdelSlice.setCurrentIndex(i));
             copy[i] = undefined;
         } else {
-            copy[index] = undefined;
+            copy[currentIndex] = undefined;
         }
         setCurrentGuess(copy);
     };
@@ -303,7 +304,7 @@ function App() {
         ) {
             setGuesses([...guesses, convertGuessToString(currentGuess)]);
             setCurrentGuess(solution.split('').map((char) => undefined));
-            setIndex(0);
+            dispatch(woerdelSlice.setCurrentIndex(0));
 
             if (winningWord) {
                 if (isLatestGame) {
@@ -356,8 +357,6 @@ function App() {
                             currentGuess={currentGuess}
                             isRevealing={isRevealing}
                             currentRowClassName={currentRowClass}
-                            setIndex={(index: number) => setIndex(index)}
-                            currentIndex={index}
                         />
                     </div>
                     <Keyboard
