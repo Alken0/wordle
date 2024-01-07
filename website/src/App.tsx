@@ -67,7 +67,7 @@ function App() {
     const [currentGuess, setCurrentGuess] = useState<Guess>(
         solution.split('').map((char) => undefined)
     );
-    const [isGameWon, setIsGameWon] = useState(false);
+
     const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
     const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
     const [isDatePickerModalOpen, setIsDatePickerModalOpen] = useState(false);
@@ -87,15 +87,14 @@ function App() {
         getStoredIsHighContrastMode()
     );
     const [isRevealing, setIsRevealing] = useState(false);
+    let loadedGameWasWon = false;
     const [guesses, setGuesses] = useState<string[]>(() => {
         const loaded = loadGameStateFromLocalStorage(isLatestGame);
         if (loaded?.solution !== solution) {
             return [];
         }
         const gameWasWon = loaded.guesses.includes(solution);
-        if (gameWasWon) {
-            setIsGameWon(true);
-        }
+        loadedGameWasWon = gameWasWon;
         if (loaded.guesses.length === MAX_CHALLENGES && !gameWasWon) {
             setIsGameLost(true);
             showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
@@ -114,8 +113,13 @@ function App() {
     );
 
     const currentIndex= useSelector(woerdelSlice.getCurrentIndex);
+    const isGameWon = useSelector(woerdelSlice.getIsGameWon);
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(woerdelSlice.setIsGameWon(loadedGameWasWon))
+    }, [loadedGameWasWon]);
 
     useEffect(() => {
         // if no game state on load,
@@ -310,7 +314,7 @@ function App() {
                 if (isLatestGame) {
                     setStats(addStatsForCompletedGame(stats, guesses.length));
                 }
-                return setIsGameWon(true);
+                return dispatch(woerdelSlice.setIsGameWon(true));
             }
 
             if (guesses.length === MAX_CHALLENGES - 1) {

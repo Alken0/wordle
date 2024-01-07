@@ -24,9 +24,10 @@ export const Cell = ({
     index
 }: Props) => {
     const currentIndex= useSelector(woerdelSlice.getCurrentIndex);
+    const isGameWon= useSelector(woerdelSlice.getIsGameWon);
 
     const isFilled = value && !isCompleted;
-    const isSelected = (index !== undefined && index === currentIndex);
+    const isSelected = (index !== undefined && index === currentIndex && !isGameWon);
     const shouldReveal = isRevealing && isCompleted;
     const animationDelay = `${position * REVEAL_TIME_MS}ms`;
     const isHighContrast = getStoredIsHighContrastMode();
